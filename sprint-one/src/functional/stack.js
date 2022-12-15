@@ -2,14 +2,10 @@
 // USE YOUR WHITEBOARD TOM
 
 var Stack = function() {
-  var someInstance = {
-    // so abstract... are we looking to put anything in here? NOOOOOOO the user does not like garbage
-  };
+  var someInstance = {};
 
   // Use an object with numeric keys to store values
-  var storage = {
-    // WILL get populated with methods and other 'user stuff'
-  };
+  var storage = {};
 
   var getKeys = function() {
     return Object.keys(storage);
