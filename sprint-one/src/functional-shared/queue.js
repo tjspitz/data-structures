@@ -18,8 +18,6 @@ queueMethods.enqueue = function(value) {
   this.storage['0'] = value;
 
   storageVals.forEach(function(val, idx) {
-    // console.log(this.storage);
-
     workaround[idx + 1] = val;
   });
 }
