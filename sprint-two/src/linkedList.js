@@ -22,7 +22,7 @@ var LinkedList = function() {
 
   list.removeHead = function() {
     // find out what the head is pointing to and save to a variable called currentFirst
-    var currentFirst = list.head;  //{head:{object that is currently there}}
+    var currentFirst = list.head; //{head:{object that is currently there}}
     // give the head the pointers from currentFirst, thus taking it out of the chain
     list.head = currentFirst.next;
     return currentFirst.value;
