@@ -6,29 +6,44 @@ var LinkedList = function() {
   list.addToTail = function(value) {
     var newNode = Node(value);
     // if head is null
-    if (list.head === null) {
+    if (list.head === null) { //
       // should point to invoking Node and passing in new value
-      list.head = newNode;
+      list.head = newNode; // {head:{Node(newVal)}}
       // tail should point to newly created Node
-      list.tail = list.head;
-      // if head is not null
+      list.tail = list.head; // list{tail:{Node(newVal)}}
+
     } else {
-      // current node = list.head
-      // while current node doesn't equal null
-        // current node = newNode.next
-      // current node.next = newNode
+      // list.tail.next is the newNode
+      list.tail.next = newNode;
+      // reassign the tail to be the newNode
+      list.tail = newNode;
     }
   };
 
-      // if head is null,
-      // then list.head = new obj with two props {aVal:x, poinTo: {Node(newVal)}}
-    // otherwise
-      // {head: {aVal:x, poinTo: {next obj}}} lis.head.poinTo
-
   list.removeHead = function() {
+    // find out what the head is pointing to and save to a variable called currentFirst
+    var currentFirst = list.head;  //{head:{object that is currently there}}
+    // give the head the pointers from currentFirst, thus taking it out of the chain
+    list.head = currentFirst.next;
+    return currentFirst.value;
   };
 
   list.contains = function(target) {
+    // traverse the list starting at the head.
+    var hasTarget = false;
+    // create variable for currentNode = list.head
+    var currentNode = list.head;
+
+    var innerFunction = function(node) {
+      if (node.value === target) {
+        hasTarget = true;
+      } else if (node.next !== null) {
+        return innerFunction(node.next);
+      }
+    };
+
+    innerFunction(currentNode);
+    return hasTarget;
   };
 
   return list;
