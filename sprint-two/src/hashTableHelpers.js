@@ -11,10 +11,13 @@
 //   limitedArray.set(3, 'hi');
 //   limitedArray.get(3); // returns 'hi'
 
+// ALL THESE ARRAYS BE LIVIN IN THE HASH TABLE (above) - especially the 'storage'
+
 var LimitedArray = function(limit) {
   var storage = [];
 
-  var limitedArray = {};
+  var limitedArray = {}; // this is setting up a space for the methods below to operate within
+  // don't think we ever touch this directly... just use it
   limitedArray.get = function(index) {
     checkLimit(index);
     return storage[index];
@@ -38,7 +41,8 @@ var LimitedArray = function(limit) {
     }
   };
 
-  return limitedArray;
+  return storage;
+  // return limitedArray;
 };
 
 // This is a "hashing function". You don't need to worry about it, just use it
