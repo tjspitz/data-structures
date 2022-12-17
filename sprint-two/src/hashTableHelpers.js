@@ -41,8 +41,7 @@ var LimitedArray = function(limit) {
     }
   };
 
-  return storage;
-  // return limitedArray;
+  return limitedArray;
 };
 
 // This is a "hashing function". You don't need to worry about it, just use it
