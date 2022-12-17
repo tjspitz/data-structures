@@ -22,7 +22,7 @@ var LinkedList = function() {
 
   list.removeHead = function() {
     // find out what the head is pointing to and save to a variable called currentFirst
-    var currentFirst = list.head;  //{head:{object that is currently there}}
+    var currentFirst = list.head; //{head:{object that is currently there}}
     // give the head the pointers from currentFirst, thus taking it out of the chain
     list.head = currentFirst.next;
     return currentFirst.value;
@@ -32,7 +32,7 @@ var LinkedList = function() {
     // traverse the list starting at the head.
     var hasTarget = false;
     // create variable for currentNode = list.head
-    var currentNode = list.head;
+    var headNode = list.head;
 
     var innerFunction = function(node) {
       if (node.value === target) {
@@ -42,7 +42,7 @@ var LinkedList = function() {
       }
     };
 
-    innerFunction(currentNode);
+    innerFunction(headNode);
     return hasTarget;
   };
 
@@ -62,5 +62,5 @@ var Node = function(value) {
  * Complexity: What is the time complexity of the above functions?
  */
 
-var newLlist = LinkedList();
-console.log(newLlist);
+// var newLlist = LinkedList();
+// console.log(newLlist);
