@@ -43,5 +43,3 @@ treeMethods.contains = function(target) {
  */
 
 
-// var someTree = Tree();
-// console.log(someTree.contains);
