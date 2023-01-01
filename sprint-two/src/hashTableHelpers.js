@@ -11,8 +11,6 @@
 //   limitedArray.set(3, 'hi');
 //   limitedArray.get(3); // returns 'hi'
 
-// ALL THESE ARRAYS BE LIVIN IN THE HASH TABLE (above) - especially the 'storage'
-
 var LimitedArray = function(limit) {
   var storage = [];
 
