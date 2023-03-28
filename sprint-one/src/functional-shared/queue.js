@@ -7,16 +7,12 @@ var Queue = function() {
   _.extend(someInstance, queueMethods);
   // Object.assign(someInstance, queueMethods);
 
-  // someInstance.enqueue = queueMethods.enqueue;
-  // someInstance.deque = queueMethods.deque;
-  // someInstance.size = queueMethods.size;
-
   return someInstance;
 };
 
 var queueMethods = {};
 queueMethods.enqueue = function(value) {
-  for (var i = queueMethods.size(); i > 0; i --) {
+  for (var i = this.size(); i > 0; i --) {
     this.storage[i] = this.storage[i - 1];
   }
   this.storage['0'] = value;
@@ -29,4 +25,3 @@ queueMethods.dequeue = function() {
 queueMethods.size = function() {
   return Object.keys(this.storage).length;
 }
-
