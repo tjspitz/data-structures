@@ -25,9 +25,9 @@ var Queue = function() {
   };
 
   someInstance.dequeue = function() {
-    var dequed = storage[someInstance.size() - 1];
+    var dequeue = storage[someInstance.size() - 1];
     delete storage[someInstance.size() - 1];
-    return dequed;
+    return dequeue;
   };
 
   someInstance.size = function() {
