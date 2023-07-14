@@ -5,32 +5,20 @@ var Stack = function() {
     storage: {}
   };
   _.extend(someInstance, stackMethods);
-
   return someInstance;
 };
 
 // helper Fn for the keys
 
 var stackMethods = {};
-
-// add methods PUSH, POP, and SIZE to 'stackMethods'
 stackMethods.push = function(value) {
-  var keysArr = Object.keys(this.storage);
-  this.storage[keysArr.length] = value;
-}
+  this.storage[this.size()] = value;
+};
 stackMethods.pop = function() {
-  var keysArr = Object.keys(this.storage);
-  var popped = this.storage[keysArr.length - 1];
-  delete this.storage[keysArr.length - 1];
+  var popped = this.storage[this.size() - 1];
+  delete this.storage[this.size() - 1];
   return popped;
-}
+};
 stackMethods.size = function() {
   return Object.keys(this.storage).length;
-}
-
-/*
-ANGRY SPEC RUNNER DOES NOT WANT
-    getKeys: function() {
-      return Object.keys(this.storage);
-    }
-*/
+};

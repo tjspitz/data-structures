@@ -13,27 +13,22 @@ var Stack = function() {
 
   // Implement the methods below
   someInstance.push = function(value) {
-    // create a new prop with key '1 more than what's in storage' and val 'value'
-    // storage[the length of the keys arr] = value
-
-    storage[getKeys().length] = value;
-
+    storage[someInstance.size()] = value;
   };
 
   someInstance.pop = function() {
-    // delete the prop w/ the highest-num key (since the keys are numeric)
+    var popped = storage[someInstance.size() - 1];
 
-    // delete storage[the length of the keys arr MINUS 1]
-    // give me the thing I just deleted
+    if (!someInstance.size()) {
+      return 0;
+    }
 
-    var popped = storage[getKeys().length - 1];
-    delete storage[getKeys().length - 1];
+    delete storage[someInstance.size() - 1];
     return popped;
-
   };
 
   someInstance.size = function() {
-    return getKeys().length;
+    return Object.keys(storage).length;
   };
 
   return someInstance;

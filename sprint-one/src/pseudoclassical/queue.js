@@ -5,6 +5,21 @@ var Queue = function() {
 };
 
 Queue.prototype.enqueue = function(value) {
+  for (var i = this.size(); i > 0; i --) {
+    this.storage[i] = this.storage[i - 1];
+  }
+  this.storage['0'] = value;
+};
+Queue.prototype.dequeue = function() {
+  var dequeued = this.storage[this.size() - 1];
+  delete this.storage[this.size() - 1];
+  return dequeued;
+};
+Queue.prototype.size = function() {
+  return Object.keys(this.storage).length;
+};
+
+Queue.prototype.enqueue = function(value) {
   var storage = this.storage;
   var vals  = Object.values(storage);
 

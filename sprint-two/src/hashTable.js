@@ -1,77 +1,96 @@
-
-
-var HashTable = function() {
+var HashTable = function () {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  this.size = 0;
+  this.resizing = false;
 };
 
-HashTable.prototype.insert = function(k, v) {
+HashTable.prototype.insert = function (k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+  // object buckets - BETTER, O(1)
+  this._storage[index] = this._storage[index] || {};
+  var bucket = this._storage[index];
+  bucket[k] = v;
 
-  // is there anything in this.storage @ INDEX? if NOT, make a new bucket []
-  var bucket = this._storage.get(index) || [];
-
-  // iterate over the 'bucket'
-    // if there is already a key for k
-    // (opt) store old value
-    // reassign value at k to v (new value)
-    // (opt) return old value
-
-  for (var i = 0; i < bucket.length; i ++) {
-    if (bucket[i][0] === k) {
-      var oldVal = bucket[i][1];
-      bucket[i][1] = v;
-      return oldVal;
-    }
+  if (!this.resizing) {
+    this.size += 1;
+  }
+  if (this.size / this._limit >= 0.75) {
+    this.resize(2);
+  }
+  if (this.size / this._limit <= 0.25) {
+    this.resize(0.5);
   }
 
-  // (no pre-existing keys for k found...)
-  // push into bucket: k & v WITHIN their own ARRAY ---> so there aren't collisions!
-  // use set to store index & val in limited array
-  // increment the size
-  bucket.push( [k, v] );
-  this._storage.set(index, bucket);
-  this._size ++;
+  // array buckets - WORSE, O(n)
+  // this._storage[index] = this._storage[index] || [];
+  // var bucket = this._storage[index];
+  // var updated = false;
 
-  // additional actions for checking size & resizing
+  // for (var i = 0; i < bucket.length; i ++) {
+  //   var tuple = bucket[i];
+  //   if (tuple[0] === k) {
+  //     tuple[1] = v;
+  //     updated = true;
+  //   }
+  // }
+  // if (!updated) {
+  //   this._storage[index].push([k, v]);
+  // }
 };
 
-HashTable.prototype.retrieve = function(k) {
+HashTable.prototype.retrieve = function (k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage.get(index) || [];
+  // object buckets - BETTER, O(1)
+  var bucket = this._storage[index];
+  return bucket ? bucket[k] : undefined;
 
-  for (var i = 0; i < bucket.length; i ++) {
-    if (bucket[i][0] === k) {
-      return bucket[i][1];
-    }
+  // array buckets - WORSE, O(n)
+  // var bucket = this._storage[index];
+  // for (var i = 0; i < bucket.length; i ++) {
+  //   var tuple = bucket[i];
+  //   if (tuple[0] === k) {
+  //     return tuple[1];
+  //   }
+  // }
+};
+
+HashTable.prototype.remove = function (k) {
+  var index = getIndexBelowMaxForKey(k, this._limit);
+  // object buckets - BETTER, O(1)
+  var bucket = this._storage[index];
+  delete bucket[k];
+
+  if (!this.resizing) {
+    this.size -= 1;
   }
-  // return undefined if the arg doesn't exist in storage
-  return undefined;
+  if (this.size / this._limit < 0.25) {
+    this.resize(0.5);
+  }
+  // array buckets - WORSE, O(n)
+  // var bucket = this._storage[index];
+  // this._storage[index] = bucket.filter(function(tuple) {
+  //   return tuple[0] !== k;
+  // })
 };
 
-HashTable.prototype.remove = function(k) {
-  var index = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage.get(index) || [];
+HashTable.prototype.resize = function(ratio) {
+  var hashTable = this;
+  var oldStorage = this._storage;
+  this.resizing = true;
+  this._limit *= ratio;
+  this._storage = LimitedArray(this._limit);
 
-    // we have to iterate through k&v pairs in this.storage @ index
-    // does this.storage @ index @ i @ 0 equal k? if so... // <--- not feeling 100% but close
-      // remove this array (this.storage[index][i])
-
-    for (var i = 0; i < bucket.length; i ++) {
-      if (bucket[i][0] === k) {
-        bucket.splice(i, 1);
-        this._size --;
-        // additional actions for checking size & resizing
-      }
-
-    }
-  // return undefined if the arg doesn't exist in storage
-  return undefined;
-
+  for (var index in oldStorage) {
+    var keys = Object.keys(oldStorage[index]);
+    var vals = Object.values(oldStorage[index]);
+    keys.forEach(function(key, i) {
+      hashTable.insert(key, vals[i]);
+    });
+  }
+  this.resizing = false;
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-
-

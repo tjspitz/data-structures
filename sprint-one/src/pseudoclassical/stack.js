@@ -5,23 +5,13 @@ var Stack = function() {
 };
 
 Stack.prototype.push = function(value) {
-  var storage = this.storage;
-  var keys = Object.keys(storage);
-
-  storage[keys.length] = value;
-}
-
+  this.storage[this.size()] = value;
+};
 Stack.prototype.pop = function() {
-  var storage = this.storage;
-  var keys = Object.keys(storage);
-  var popped = storage[keys.length - 1];
-
-  delete storage[keys.length - 1];
+  var popped = this.storage[this.size()  -1];
+  delete this.storage[this.size() - 1];
   return popped;
-}
-
+};
 Stack.prototype.size = function() {
-  var storage = this.storage;
-
-  return Object.keys(storage).length;
-}
+  return Object.keys(this.storage).length;
+};

@@ -4,23 +4,15 @@ class Stack {
   constructor() {
     this.storage = {};
   }
-
   push(value) {
-    var keys = Object.keys(this.storage);
-
-    this.storage[keys.length] = value;
+    this.storage[this.size()] = value;
   }
-
   pop() {
-    var keys = Object.keys(this.storage);
-    var popped = this.storage[keys.length - 1];
-
-    delete this.storage[keys.length - 1];
+    var popped = this.storage[this.size() - 1];
+    delete this.storage[this.size() - 1];
     return popped;
   }
-
   size() {
     return Object.keys(this.storage).length;
   }
-
 }

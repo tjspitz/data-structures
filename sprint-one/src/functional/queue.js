@@ -12,33 +12,31 @@ var Queue = function() {
 
   // Implement the methods below
   someInstance.enqueue = function(value) {
-    // put the val 'on the back'...
+    // iterate backwards thru the keys while max is greater than 0,
+    //   starting at 'storage' size (it is 1 more than max key)
 
-    // declare var to hold 'old' vals in an arr
-    // assign key 0 to hold 'value'
-    // for each el in the Obj.Vals arr
-      // assign storage @ [cur idx + 1] to equal cur val
-    var oldStorage = Object.values(storage);
-    var updater = function(val, idx) {
-      storage[idx + 1] = val;
-    };
+    // {0: 'c', 1: 'b', 2: 'a'} - size 3, 'a' was inserted first
+
+    for (var i = someInstance.size(); i > 0; i --) {
+      storage[i] = storage[i - 1];
+    // {0: 'c', 1: 'b', 2: 'a', 3: 'a'} // i = 3
+    // {0: 'c', 1: 'b', 2: 'b', 3: 'a'} // i = 2
+    // {0: 'c', 1: 'c', 2: 'b', 3: 'a'} // i = 1
+    }
 
     storage['0'] = value;
-    oldStorage.forEach(updater);
+    // {0: 'd', 1: 'c', 2: 'b', 3: 'a'}
 
   };
 
   someInstance.dequeue = function() {
-    // remove a val 'from the front'
-    // return that val
-    var dqed = storage[getKeys().length - 1];
-    delete storage[getKeys().length - 1];
-    return dqed;
+    var dequeue = storage[someInstance.size() - 1];
+    delete storage[someInstance.size() - 1];
+    return dequeue;
   };
 
   someInstance.size = function() {
-    return getKeys().length;
-
+    return Object.keys(storage).length;
   };
 
   return someInstance;
